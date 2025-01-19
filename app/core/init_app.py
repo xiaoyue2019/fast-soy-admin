@@ -565,6 +565,19 @@ async def init_menus():
         icon_type=IconType.iconify,
     )
 
+    await Menu.create(
+        status=StatusType.enable,
+        parent_id=0,
+        menu_type=MenuType.menu,
+        menu_name="单币查询",
+        route_name="single-coin",
+        route_path="/single-coin",
+        component="layout.base$view.about",
+        order=7,
+        # i18n_key="route.about",
+        # icon="fluent:book-information-24-regular",
+        icon_type=IconType.iconify,
+    )
 
 async def init_users():
     role_exist = await role_controller.model.exists()
