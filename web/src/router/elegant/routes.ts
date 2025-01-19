@@ -51,15 +51,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'single-coin',
-    path: '/single-coin',
-    component: 'layout.base$view.single-coin',
-    meta: {
-      title: 'single-coin',
-      i18nKey: 'route.single-coin',
-    }
-  },
-  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -356,6 +347,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       }
     ]
+  },
+  {
+    name: 'single-coin',
+    path: '/single-coin',
+    component: 'layout.base$view.single-coin',
+    meta: {
+      title: 'single-coin',
+      i18nKey: 'route.single-coin'
+    }
   },
   {
     name: 'user-center',

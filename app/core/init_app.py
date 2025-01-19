@@ -572,7 +572,7 @@ async def init_menus():
         menu_name="单币查询",
         route_name="single-coin",
         route_path="/single-coin",
-        component="layout.base$view.about",
+        component="layout.base$view.single-coin",
         order=7,
         # i18n_key="route.about",
         # icon="fluent:book-information-24-regular",
