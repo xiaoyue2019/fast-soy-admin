@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import * as echarts from 'echarts';
-import { DatePicker } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
+import { useRoute } from 'vue-router'; // 引入 useRoute
 import axios from 'axios';
 import dayjs from 'dayjs';
 
@@ -20,10 +20,14 @@ const twitterNews = ref([]); // 资讯
 const socialData = ref(null);
 const holderTrendData = ref([]);
 
+// 获取路由参数传入的币种名称
+const route = useRoute();
+const coinName = ref(route.params.coin || 'ripple'); // 默认值为 'ripple'，如果没有传递则使用该默认值
+
 // 请求社交媒体数据和持币地址变化趋势数据 资讯 请求
 const fetchSocialData = async () => {
   try {
-    const response = await axios.get('https://dncapi.flink1.com/api/v3/coin/hotsocial?coincode=ripple&webp=1');
+    const response = await axios.get(`https://dncapi.flink1.com/api/v3/coin/hotsocial?coincode=${coinName.value}&webp=1`);
     if (response.data?.data) {
       socialData.value = response.data.data.social;
       holderTrendData.value = response.data.data.holdcoin.list;
@@ -118,7 +122,7 @@ const fetchTwitterNews = async () => {
   try {
     const response = await axios.get(
       'https://dncapi.flink1.com/api/v5/News/cointwitter',
-      { params: { code: 'ripple', per_Page: 10, page: 1, webp: 1 } }
+      { params: { code: coinName.value, per_Page: 10, page: 1, webp: 1 } }
     );
     if (response.data?.data?.list) {
       twitterNews.value = response.data.data.list.map((item) => ({
@@ -148,7 +152,7 @@ const fetchHoldersData = async () => {
   try {
     const response = await axios.get(
       'https://dncapi.flink1.com/api/v3/coin/holders',
-      { params: { code: 'ripple', webp: 1 } }
+      { params: { code: coinName.value, webp: 1 } }
     );
 
     if (response.data?.data) {
@@ -216,7 +220,7 @@ const fetchData = async () => {
       `https://dncapi.flink1.com/api/v3/coin/history`,
       {
         params: {
-          coincode: 'ripple',
+          coincode: coinName.value,
           begintime: formattedStartDate,
           endtime: formattedEndDate,
           page: 1,
@@ -238,11 +242,12 @@ const fetchData = async () => {
     alert('请求失败，请检查网络连接。');
   }
 };
+
 // 请求数据rank
 const fetchData_rank = async () => {
   try {
     const response = await axios.get(
-      `https://dncapi.flink1.com/api/coin/coinhisrank?code=ripple&webp=1`
+      `https://dncapi.flink1.com/api/coin/coinhisrank?code=${coinName.value}&webp=1`
     );
     if (response.data.data) {
       const data = response.data.data;
@@ -382,61 +387,61 @@ const updateYearHighHeatmap = (highPriceKline) => {
   });
 
   const option = {
-  title: {
-    text: '年度最高点热力图',
-    left: 'center',
-  },
-  tooltip: {
-    position: 'top',
-    formatter: (params) => {
-      return `${params.data[1] + 2021}年 ${params.data[0] + 1}月<br/>最高价: ${params.data[2]}`;
+    title: {
+      text: '年度最高点热力图',
+      left: 'center',
     },
-  },
-  grid: {
-    top: '16%', // 图表顶部距离
-    left: '10%',
-    right: '10%',
-    bottom: '12%', // 图表底部距离，不用过大，保持图表大小
-  },
-  xAxis: {
-    type: 'category',
-    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-    splitArea: {
-      show: true,
+    tooltip: {
+      position: 'top',
+      formatter: (params) => {
+        return `${params.data[1] + 2021}年 ${params.data[0] + 1}月<br/>最高价: ${params.data[2]}`;
+      },
     },
-  },
-  yAxis: {
-    type: 'category',
-    data: years.map((year) => `${year}年`),
-    splitArea: {
-      show: true,
+    grid: {
+      top: '16%', // 图表顶部距离
+      left: '10%',
+      right: '10%',
+      bottom: '12%', // 图表底部距离，不用过大，保持图表大小
     },
-  },
-  visualMap: {
-    min: 0,
-    max: Math.max(...heatmapData.map((d) => d[2])),
-    calculable: true,
-    orient: 'horizontal', // 横向显示图例
-    left: 'center', // 图例居中
-    bottom: '-2%', // 让图例单独下移，而不影响图表大小
-  },
-  series: [
-    {
-      name: '月度最高点',
-      type: 'heatmap',
-      data: heatmapData,
-      label: {
+    xAxis: {
+      type: 'category',
+      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      splitArea: {
         show: true,
       },
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)',
-        },
+    },
+    yAxis: {
+      type: 'category',
+      data: years.map((year) => `${year}年`),
+      splitArea: {
+        show: true,
       },
     },
-  ],
-};
+    visualMap: {
+      min: 0,
+      max: Math.max(...heatmapData.map((d) => d[2])),
+      calculable: true,
+      orient: 'horizontal', // 横向显示图例
+      left: 'center', // 图例居中
+      bottom: '-2%', // 让图例单独下移，而不影响图表大小
+    },
+    series: [
+      {
+        name: '月度最高点',
+        type: 'heatmap',
+        data: heatmapData,
+        label: {
+          show: true,
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: 'rgba(0, 0, 0, 0.5)',
+          },
+        },
+      },
+    ],
+  };
 
   chart.setOption(option);
 };

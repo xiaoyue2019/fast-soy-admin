@@ -155,7 +155,7 @@ const local: App.I18n.Schema = {
     document_antd: 'Ant Design Vue文档',
     'user-center': '个人中心',
     about: '关于',
-    "single-coin": '单币查询',
+    "singlecoin": '单币查询',
     "dapan": '大盘',
     function: '系统功能',
     function_tab: '标签页',

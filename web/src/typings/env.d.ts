@@ -3,6 +3,7 @@
  *
  * It is used to declare the type of the import.meta object
  */
+
 declare namespace Env {
   /** The router history mode */
   type RouterHistoryMode = 'hash' | 'history' | 'memory';

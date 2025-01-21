@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router"; // 引入 useRouter 用于路由跳转
 
 // 数据相关
 const coins = ref([]);
@@ -8,6 +9,9 @@ const totalPages = ref(0);
 const loading = ref(false);
 const sortKey = ref("rank");
 const sortOrder = ref("asc"); // asc: 升序, desc: 降序
+const hoveredRow = ref(null); // 用于存储当前鼠标悬停的行
+
+const router = useRouter(); // 使用 Vue Router 实例
 
 // 加载数据的函数
 const fetchData = async (page = 1) => {
@@ -52,6 +56,11 @@ const changePage = (page) => {
   }
 };
 
+// 跳转到指定币种的路由
+const goToCoinPage = (coin) => {
+  router.push(`/singlecoin/${coin}`); // 跳转到 '/singlecoin/:coinName' 路由，传递 coin.code 参数
+};
+
 // 初始加载
 onMounted(() => {
   fetchData(currentPage.value);
@@ -75,7 +84,14 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="coin in coins" :key="coin.code">
+        <tr 
+          v-for="coin in coins" 
+          :key="coin.code" 
+          :class="{'hovered': hoveredRow === coin.code}" 
+          @mouseover="hoveredRow = coin.code" 
+          @mouseleave="hoveredRow = null"
+          @click="goToCoinPage(coin.code)"
+        >
           <td>{{ coin.rank }}</td>
           <td><img :src="coin.logo" :alt="coin.name" class="coin-logo" /></td>
           <td>{{ coin.fullname }} ({{ coin.name }})</td>
@@ -150,6 +166,10 @@ h1 {
 
 .coin-table .negative {
   color: red;
+}
+
+.coin-table tr.hovered {
+  background-color: #f0f8ff; /* 鼠标悬停时变色 */
 }
 
 .pagination {

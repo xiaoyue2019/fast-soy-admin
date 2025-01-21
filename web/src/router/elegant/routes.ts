@@ -358,12 +358,12 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'single-coin',
-    path: '/single-coin',
-    component: 'layout.base$view.single-coin',
+    name: 'singlecoin',
+    path: '/singlecoin/:coin',
+    component: 'layout.base$view.singlecoin',
     meta: {
-      title: 'single-coin',
-      i18nKey: 'route.single-coin'
+      title: 'singlecoin',
+      i18nKey: 'route.singlecoin'
     }
   },
   {
