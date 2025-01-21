@@ -17,8 +17,9 @@ import { localStg } from '@/utils/storage';
  */
 export function createRouteGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
+    
     const location = await initRoute(to);
-
+    
     if (location) {
       next(location);
       return;
@@ -42,6 +43,7 @@ export function createRouteGuard(router: Router) {
       // if it is login route when logged in, then switch to the root page
       {
         condition: isLogin && to.name === loginRoute,
+        
         callback: () => {
           next({ name: rootRoute });
         }
