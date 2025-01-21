@@ -51,6 +51,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'dapan',
+    path: '/dapan',
+    component: 'layout.base$view.dapan',
+    meta: {
+      title: 'dapan',
+      i18nKey: 'route.dapan'
+    }
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',

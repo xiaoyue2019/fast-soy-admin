@@ -579,6 +579,20 @@ async def init_menus():
         icon_type=IconType.iconify,
     )
 
+    # await Menu.create(
+    #     status=StatusType.enable,
+    #     parent_id=0,
+    #     menu_type=MenuType.menu,
+    #     menu_name="大盘",
+    #     route_name="dapan",
+    #     route_path="/dapan",
+    #     component="layout.base$view.dapan",
+    #     order=8,
+    #     # i18n_key="route.about",
+    #     # icon="fluent:book-information-24-regular",
+    #     icon_type=IconType.iconify,
+    # )
+
 async def init_users():
     role_exist = await role_controller.model.exists()
     if not role_exist:

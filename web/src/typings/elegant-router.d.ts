@@ -33,6 +33,7 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "dapan": "/dapan";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -108,6 +109,7 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "dapan"
     | "function"
     | "home"
     | "iframe-page"
@@ -140,6 +142,7 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "about"
+    | "dapan"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"

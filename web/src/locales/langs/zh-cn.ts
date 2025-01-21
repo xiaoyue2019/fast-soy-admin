@@ -156,6 +156,7 @@ const local: App.I18n.Schema = {
     'user-center': '个人中心',
     about: '关于',
     "single-coin": '单币查询',
+    "dapan": '大盘',
     function: '系统功能',
     function_tab: '标签页',
     'function_multi-tab': '多标签页',
